@@ -10,15 +10,18 @@ class Animal{
     protected String name;
 
     Animal(String name){
+
         this.name = name;
     }
 
     public String speak(){
+
         return "Generic sound: idk";
     }
 
     @Override
     public String toString() {
+
         return "Animal: " + this.name;
     }
 
@@ -58,7 +61,12 @@ class Mammal extends Animal{
 
     @Override
     public String speak(){
+
         return this.name + ": "+ this.sound;
+    }
+
+    public void performTrick(){
+        System.out.println(this.name + " is performing a trick.");
     }
 }
 
@@ -69,17 +77,21 @@ class Mammal extends Animal{
 class Dog extends Mammal{
 
     Dog(String name){
-        super(name, warmBlooded, dietType, numLegs, sound);
-        this.name = name;
-        this.warmBlooded = true;
-        this.dietType = "omnivore";
-        this.numLegs = 4;
-        this.sound = "Woof!";
+        super(name, true, "omnivore", 4, "Woof!");
     }
 
     @Override
     public String speak(){
+
         return this.name + " says: " + this.sound;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(this.name == o && o.equals(this)){
+            return true;
+        }
+        return false;
     }
 }
 
@@ -88,32 +100,23 @@ class Dog extends Mammal{
 // - Override speak() to print "<name> says: Meow!"
 class Cat extends Mammal{
 
-    Cat(String name, boolean warmBlooded, String dietType, int numLegs, String sound){
-        super(name, warmBlooded, dietType, numLegs, sound);
-        this.name = name;
-        this.warmBlooded = true;
-        this.dietType = "carnivore";
-        this.numLegs = 4;
-        this.sound = "Meow!";
+    Cat(String name){
+        super(name, true, "carnivore", 4, "Meow!");
     }
 
     @Override
     public String speak(){
+
         return this.name + " says: " + this.sound;
     }
 }
 
 // TODO: Define a final class Human that extends Mammal
 // - Constructor takes name and passes name, true, "omnivore", 2, "Hello!" to super
-class Human extends Mammal{
+final class Human extends Mammal{
 
-    Human(String name, boolean warmBlooded, String dietType, int numLegs, String sound) {
-        super(name, warmBlooded, dietType, numLegs, sound);
-        this.name = name;
-        this.warmBlooded = true;
-        this.dietType = "omnivore";
-        this.numLegs = 2;
-        this.sound = "Hello!";
+    Human(String name) {
+        super(name, true, "omnivore", 2, "Hello!");
     }
 }
 
@@ -137,6 +140,7 @@ class Reptile extends Animal{
 
     @Override
     public String speak(){
+
         return this.name + "'s sound: " + this.sound;
     }
 }
@@ -154,6 +158,10 @@ class Animal_Kingdom {
         Animal a2 = new Cat("Whiskers");
         System.out.println(a1.speak());
         System.out.println(a2.speak());
+        System.out.println(a1.equals(new Dog("Buddy")));
+
+        Mammal mammal = (Mammal) a1;
+        mammal.performTrick();
     }
 }
 
@@ -163,15 +171,22 @@ class Animal_Kingdom {
 class Bird extends Animal{
 
 
-    Bird(String name, boolean warmblooded, int numLegs, String dietType, String sound) {
+    Bird(String name) {
         super(name);
     }
-
     @Override
     public String speak(){
         return this.name + "'s sound: chirp!";
     }
 }
 // 2. Try to extend Human – what happens and why?
+
+// I get this error: Cannot inherit from final 'Human'
+// The error is because Human is a final class, indicating that it can't have a subclass.
+// It is the final version of that particular class.
+
+
 // 3. Override equals() in Dog or Cat to also check the type
+
 // 4. Add a method to Mammal called performTrick() and call it via downcasting
+
